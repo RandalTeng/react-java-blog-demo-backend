@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.blog.models.GroupUser" table="group_user">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="gid" column="gid"/>
+        <property name="uid" column="uid"/>
+
+        <!-- 多对一关联配置 -->
+        <many-to-one name="group" class="com.blog.models.Group" column="gid"/>
+        <many-to-one name="user" class="com.blog.models.User" column="uid"/>
+    </class>
+</hibernate-mapping>

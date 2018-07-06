@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 开启@注解支持 -->
+    <mvc:annotation-driven/>
+    <!-- 默认路由 -->
+    <mvc:view-controller path="/" view-name="forward:/index/index" />
+
+    <!-- 静态资源 -->
+    <!-- 前面servlet的url-pattern 没有匹配全url 而是后缀型url  这边可以不用配置静态资源跳转 -->
+    <!--<mvc:resources mapping="/assets/*" location="/assets/" />-->
+
+    <mvc:default-servlet-handler/>
+
+    <!-- 配置扫描指定包注解 use-default-filters="false" -->
+    <context:component-scan base-package="com.blog" use-default-filters="false">
+        <!-- 扫描时跳过 @Controller 注解的JAVA类（控制器） -->
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+    <context:annotation-config/>
+
+    <!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/> <!-- 解析类 -->
+        <property name="contentType" value="text/html"/> <!-- Response ContentType -->
+        <property name="prefix" value="/WEB-INF/views/"/> <!-- 前缀 -->
+        <property name="suffix" value=".jsp"/> <!-- 后缀 -->
+    </bean>
+
+    <!-- 配置环境参数获取器 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="location" value="classpath:env.properties"/>
+    </bean>
+</beans>

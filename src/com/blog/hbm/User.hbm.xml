@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.blog.models.User" table="user">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="username" column="username"/>
+        <property name="password" column="password"/>
+        <property name="salt" column="salt" type="string" length="10">
+            <column name="salt" sql-type="varchar"/>
+        </property>
+        <property name="groupId" column="group_id"/>
+        <property name="description" column="description"/>
+        <property name="sessionId" column="session_id"/>
+        <property name="lastConnectUri" column="last_connect_uri"/>
+        <property name="lastConnectTime" column="last_connect_time"/>
+        <property name="lastConnectIp" column="last_connect_ip"/>
+
+        <!-- 一对多关联配置 -->
+        <set name="groupUsers">
+            <key column="uid"/>
+            <one-to-many class="com.blog.models.GroupUser"/>
+        </set>
+
+        <!-- 多对多配置 -->
+        <set name="groups" table="group_user">
+            <key column="uid"/>
+            <many-to-many class="com.blog.models.Group" column="gid"/>
+        </set>
+    </class>
+</hibernate-mapping>

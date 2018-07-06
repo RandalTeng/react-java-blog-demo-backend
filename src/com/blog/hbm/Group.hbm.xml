@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.blog.models.Group" table="group">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="groupName" column="group_name"/>
+        <property name="pid" column="pid"/>
+        <property name="path" column="path"/>
+        <property name="description" column="description"/>
+
+        <!-- 一对多关联配置 -->
+        <set name="groupUsers">
+            <key column="gid"/>
+            <one-to-many class="com.blog.models.GroupUser"/>
+        </set>
+
+        <!-- 多对多关联配置 table 中间表名称 -->
+        <set name="users" table="group_user">
+            <!-- 当前表在中间表的关联字段 -->
+            <key column="gid"/>
+            <!-- 关联表在中间表的关联字段 -->
+            <many-to-many class="com.blog.models.User" column="uid"/>
+        </set>
+    </class>
+</hibernate-mapping>
