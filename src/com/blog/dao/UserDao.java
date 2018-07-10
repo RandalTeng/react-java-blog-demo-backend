@@ -15,8 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 public class UserDao {
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
+    public UserDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;

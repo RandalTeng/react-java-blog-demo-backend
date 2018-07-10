@@ -56,7 +56,7 @@ public class Index extends Base {
             @RequestParam("password") String password
     ) {
         HttpSession session = request.getSession();
-        Map<String, Object> result = new HashMap<>();
+        HashMap<String, Object> result = getMap(200, "");
 
         User user = (User) session.getAttribute("user");
         if (user != null) {

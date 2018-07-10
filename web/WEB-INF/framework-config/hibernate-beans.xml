@@ -62,10 +62,11 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <!-- 这个配置完了，就可以使用@Transactional注释开启事务 -->
     <tx:annotation-driven/>
 
     <!-- 配置事务属性 -->
-    <!--<tx:advice id="txAdvice">
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="get" read-only="true"/>
             <tx:method name="*"/>
